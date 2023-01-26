@@ -1,13 +1,24 @@
+// Читать про process.env;
+
+
+
 const express = require('express');
-
+const mongoose = require('mongoose');
+const { errors } = require('celebrate');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
+// Use .env for environment keys
+require('dotenv').config();
 const { PORT = 3002, NODE_ENV } = process.env;
-const app = express();
 
+const app = express();
+app.use(cookieParser());
+
+// CORS setup
 app.use(cors({
   origin: 'http://localhost:3000',
-  credentials: false,
+  credentials: true,
 }));
 
 const allowedCors = [
@@ -15,40 +26,36 @@ const allowedCors = [
   'http://localhost:3001',
 ];
 
-// import { MainClient } from 'binance'
+app.use((req, res, next) => {
+  const { origin } = req.headers;
+  if (allowedCors.includes(origin)) {
+    res.header('Access-Control-Allow-Origin', origin);
+  }
+  const { method } = req;
+  const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
+  const requestHeaders = req.headers['access-control-request-headers'];
+  if (method === 'OPTIONS') {
+    res.header('Access-Control-Allow-Methods', DEFAULT_ALLOWED_METHODS);
+    res.header('Access-Control-Allow-Headers', requestHeaders);
+    return res.end();
+  }
+  return next();
+});
 
-// const proxy = 'http://127.0.0.1:8080/'
+// Mongoose DB connection
+mongoose.connect(NODE_ENV === 'production' ? DB_ADRESS : 'mongodb://localhost:27017/cryptodb', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+// parse incoming JSON requests and puts the parsed data in req.body. Not limited bytes
+app.use(express.json());
+
+// Routers
 app.use('/', require('./routes/index'));
 
-
-// const baseUrl = 'https://api.binance.com'
-// const realClient = new MainClient({
-//     api_key: 'your_api_key',
-//     api_secret: 'your_api_secret',
-//     beautifyResponses: false,
-//     baseUrl: proxy + baseUrl,
-//     recvWindow: 40000
-// })
-
-// app.use(express.json());
-
+app.use(errors());
 
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
 });
-
-
-// Listen on a specific host via the HOST environment variable
-var host = process.env.HOST || '127.0.0.1';
-// Listen on a specific port via the PORT environment variable
-var port = process.env.PORT || 8080;
-
-var cors_proxy = require('cors-anywhere');
-cors_proxy.createServer({
-    originWhitelist: [], // Allow all origins
-    requireHeader: ['origin', 'x-requested-with'],
-    removeHeaders: ['cookie', 'cookie2']
-}).listen(port, host, function() {
-    console.log('Running CORS Anywhere on ' + host + ':' + port);
-});
-
