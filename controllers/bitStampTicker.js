@@ -1,13 +1,13 @@
 const corsAnywhere = require("cors-anywhere");
 const bitStampUrl = "/https://www.bitstamp.net/api/v2/ticker/";
-const activeTickers = [
-  "usdteur",
-  "btcusdt",
-  "ethusdt",
-  "xrpusdt",
-  "shibusd",
-  "dogeusd",
-];
+// const activeTickers = [
+//   "usdteur",
+//   "btcusdt",
+//   "ethusdt",
+//   "xrpusdt",
+//   "shibusd",
+//   "dogeusd",
+// ];
 
 module.exports.bitStampTicker = (req, res, next) => {
   const proxy = corsAnywhere.createServer({

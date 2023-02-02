@@ -1,36 +1,31 @@
 const router = require("express").Router();
-const { celebrate, Joi} = require('celebrate');
-
 
 // Middlewares List
 const { auth } = require("../middlewares/auth");
-const { validateUser } = require('../middlewares/validation');
+const { validateUser } = require("../middlewares/validation");
 
 // Controllers list
 const { bitStampTicker } = require("../controllers/bitStampTicker");
-const { login } = require('../controllers/login');
-const { createUser } = require('../controllers/createUser');
-const { logout } = require('../controllers/logout');
+const { login } = require("../controllers/login");
+const { createUser } = require("../controllers/createUser");
+const { logout } = require("../controllers/logout");
 
 // Signup, login routers - no authorization
 router.post(
   "/login",
-  celebrate({
-    body: Joi.object().keys({
-      email: Joi.string().pattern(/[a-zA-Z0-9._%+-]+\x40[a-zA-Z0-9.-]+\x2E[a-zA-Z]{2,}/),
-      password: Joi.string().required(),
-    }),
+  validateUser({
+    userName: "optional",
+    userEmail: "required",
+    userPassword: "required",
   }),
   login
 );
 router.post(
   "/signup",
-  celebrate({
-    body: Joi.object().keys({
-      name: Joi.string().alphanum().min(2).max(30),
-      email: Joi.string().pattern(/[a-zA-Z0-9._%+-]+\x40[a-zA-Z0-9.-]+\x2E[a-zA-Z]{2,}/),
-      password: Joi.string().required(),
-    }),
+  validateUser({
+    userName: "required",
+    userEmail: "required",
+    userPassword: "required",
   }),
   createUser
 );
@@ -44,7 +39,10 @@ router.use(auth);
 
 // Signout routers - authorization needed
 router.get("/logout", logout);
-router.use('/users', require('./users'));
+router.use("/users", require("./users"));
+
+// Wallets and Transactions routes
+router.use("/transactions", require("./transactions"));
 
 router.use("/", (req, res, next) => {
   next();
