@@ -6,4 +6,6 @@ module.exports.errorMessages = {
   wrongCredentials: 'Incorrect email or password',
   walletNotCreated: 'Problem with wallet creation',
   walletNotFound: 'Wallet not found',
+  transactionNotCreated: 'Problem with transaction creation',
+  transactionNotFound: 'Transactions not found'
 }

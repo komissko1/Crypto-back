@@ -2,7 +2,7 @@ const bcrypt = require("bcryptjs");
 const User = require("../models/user");
 const wallets = require("./wallets");
 const UserExistsError = require("../errors/UserExistsError");
-const WrongDataError = require("../errors/WalletCreationError");
+const WrongDataError = require("../errors/WrongDataError");
 const { errorMessages } = require("../utils/utils");
 
 module.exports.createUser = (req, res, next) => {
@@ -20,7 +20,7 @@ module.exports.createUser = (req, res, next) => {
           wallets
             .createWallet(data._id)
             .then((newWallet) =>
-              res.status(201).send({ user: data, message: "User Created"})
+              res.status(201).send({ user: data, wallet: newWallet, message: "User Created"})
             )
             .catch();
         })

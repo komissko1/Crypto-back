@@ -8,12 +8,17 @@ const { errors } = require('celebrate');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
+const { requestLogger, errorLogger } = require('./middlewares/logger');
+
+
 // Use .env for environment keys
 require('dotenv').config();
 const { PORT = 3002, NODE_ENV } = process.env;
 
 const app = express();
 app.use(cookieParser());
+app.use(requestLogger);
+
 
 // CORS setup
 app.use(cors({
@@ -48,13 +53,20 @@ mongoose.connect(NODE_ENV === 'production' ? DB_ADRESS : 'mongodb://localhost:27
   useUnifiedTopology: true,
 });
 
-// parse incoming JSON requests and puts the parsed data in req.body. Not limited bytes
+// parses incoming JSON requests and puts the parsed data in req.body. Not limited bytes
 app.use(express.json());
 
 // Routers
 app.use('/', require('./routes/index'));
 
+app.use(errorLogger);
 app.use(errors());
+app.use((err, req, res, next) => {
+  const statusCode = err.statusCode || 500;
+  const message = statusCode === 500 ? 'Error on the servers side' : err.message;
+  res.status(statusCode).send({ message });
+  next();
+});
 
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);

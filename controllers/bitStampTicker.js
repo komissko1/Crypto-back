@@ -25,4 +25,3 @@ module.exports.bitStampTicker = (req, res, next) => {
   proxy.emit("request", req, res);
 };
 
-
