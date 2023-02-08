@@ -1,7 +1,7 @@
-const Wallet = require("../models/wallet");
-const CreationError = require("../errors/CreationError");
-const NotFoundError = require("../errors/NotFoundError");
-const { errorMessages } = require("../utils/utils");
+const Wallet = require('../models/wallet');
+const CreationError = require('../errors/CreationError');
+const NotFoundError = require('../errors/NotFoundError');
+const { errorMessages } = require('../utils/utils');
 
 module.exports.getWallet = (userId) => {
   return Wallet.findOne({ owner: userId })

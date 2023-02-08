@@ -36,6 +36,11 @@ const userSchema = new mongoose.Schema({
         'Use only latin letters, digits and special symbols',
     },
   },
+  dateStamp: {
+    type: Date,
+    required: true,
+    default: Date.now,
+  },
 });
 
 userSchema.statics.findUserByLoginData = function ({ email, password }) {

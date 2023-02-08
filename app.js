@@ -1,7 +1,5 @@
 // Читать про process.env;
 
-
-
 const express = require('express');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
@@ -10,15 +8,14 @@ const cookieParser = require('cookie-parser');
 
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-
 // Use .env for environment keys
 require('dotenv').config();
+
 const { PORT = 3002, NODE_ENV } = process.env;
 
 const app = express();
 app.use(cookieParser());
 app.use(requestLogger);
-
 
 // CORS setup
 app.use(cors({
