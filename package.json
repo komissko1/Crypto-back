@@ -1,5 +1,5 @@
 {
-  "name": "Crypto-exchange server",
+  "name": "crypto_server",
   "version": "1.0.0",
   "description": "back-end for Crypto",
   "main": "app.js",
@@ -11,15 +11,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/komissko1/movies-explorer-api.git"
+    "url": "git+https://github.com/komissko1/Crypto-back.git"
   },
   "keywords": [],
   "author": "Kostiantyn Komisarov",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/komissko1/movies-explorer-api/issues"
+    "url": "https://github.com/komissko1/Crypto-back/issues"
   },
-  "homepage": "https://github.com/komissko1/movies-explorer-api#readme",
+  "homepage": "https://github.com/komissko1/Crypto-back#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.2",
