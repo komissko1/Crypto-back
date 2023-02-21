@@ -30,6 +30,11 @@ router.post(
   createUser
 );
 
+router.get("/", (req, res, next) => {
+  res.status(405).send({ message: "Works only with the specific app" });
+  next();
+});
+
 // 3rd party api routers - no authorization
 router.get("/bitstamp/:currency", bitStampTicker);
 router.get("/bitstamp", bitStampTicker);
@@ -44,9 +49,6 @@ router.use("/users", require("./users"));
 // Wallets and Transactions routes
 router.use("/transactions", require("./transactions"));
 
-router.get("/", (req, res, next) => {
-  res.status(405).send({ message: "Works only with specific app" });
-});
 router.use("/", (req, res, next) => {
   next();
 });
