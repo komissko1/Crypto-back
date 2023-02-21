@@ -44,6 +44,9 @@ router.use("/users", require("./users"));
 // Wallets and Transactions routes
 router.use("/transactions", require("./transactions"));
 
+router.get("/", (req, res, next) => {
+  res.status(405).send({ message: "Works only with specific app" });
+});
 router.use("/", (req, res, next) => {
   next();
 });
