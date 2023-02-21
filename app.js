@@ -12,7 +12,7 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 // Use .env for environment keys
 require('dotenv').config();
 
-const { PORT = 3002, NODE_ENV } = process.env;
+const { PORT = 3002, NODE_ENV, DB_ADRESS } = process.env;
 
 const app = express();
 app.use(cookieParser());
