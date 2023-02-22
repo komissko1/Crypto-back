@@ -18,5 +18,4 @@ module.exports.mongo = async () => {
   } catch (err) {
     return next(new DbConnectionError(errorMessages.DBconnectionFail));
   }
-  return next();
 };
