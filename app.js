@@ -29,7 +29,7 @@ app.use(
 const allowedCors = [
   'http://localhost:3000',
   'http://localhost:3001',
-  'https://komissko1.github.io/crypto-front',
+  'https://komissko1.github.io',
 ];
 
 app.use((req, res, next) => {
