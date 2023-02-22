@@ -21,7 +21,7 @@ app.use(requestLogger);
 // CORS setup
 app.use(
   cors({
-    origin: 'https://komissko1.github.io/crypto-front',
+    origin: 'https://komissko1.github.io',
     credentials: true,
   })
 );
@@ -29,7 +29,8 @@ app.use(
 const allowedCors = [
   'http://localhost:3000',
   'http://localhost:3001',
-  'https://komissko1.github.io',
+  'https://komissko1.github.io/',
+  'https://komissko1.github.io/crypto-front',
 ];
 
 app.use((req, res, next) => {
