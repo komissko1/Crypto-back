@@ -2,7 +2,7 @@
 // Add errors
 
 const express = require('express');
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 const { errors } = require('celebrate');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
@@ -19,15 +19,17 @@ app.use(cookieParser());
 app.use(requestLogger);
 
 // CORS setup
-app.use(cors({
-  origin: 'https://komissko1.github.io/crypto-front',
-  credentials: true,
-}));
+app.use(
+  cors({
+    origin: 'https://komissko1.github.io/crypto-front',
+    credentials: true,
+  })
+);
 
 const allowedCors = [
   'http://localhost:3000',
   'http://localhost:3001',
-  'https://komissko1.github.io/crypto-front'
+  'https://komissko1.github.io/crypto-front',
 ];
 
 app.use((req, res, next) => {
@@ -47,10 +49,8 @@ app.use((req, res, next) => {
 });
 
 // Mongoose DB connection
-mongoose.connect(NODE_ENV === 'production' ? DB_ADRESS : 'mongodb://localhost:27017/cryptodb', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+const { mongo } = require('./utils/dbConnection');
+mongo();
 
 // parses incoming JSON requests and puts the parsed data in req.body. Not limited bytes
 app.use(express.json());
@@ -62,7 +62,8 @@ app.use(errorLogger);
 app.use(errors());
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
-  const message = statusCode === 500 ? 'Error on the servers side' : err.message;
+  const message =
+    statusCode === 500 ? 'Error on the servers side' : err.message;
   res.status(statusCode).send({ message });
   next();
 });
