@@ -30,11 +30,6 @@ router.post(
   createUser
 );
 
-router.get("/", (req, res, next) => {
-  res.status(405).send({ message: "Works only with the specific app" });
-  next();
-});
-
 // 3rd party api routers - no authorization
 router.get("/bitstamp/:currency", bitStampTicker);
 router.get("/bitstamp", bitStampTicker);
