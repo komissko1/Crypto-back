@@ -8,5 +8,5 @@ module.exports.errorMessages = {
   walletNotFound: 'Wallet not found',
   transactionNotCreated: 'Problem with transaction creation',
   transactionNotFound: 'Transactions not found',
-  DBconnectionFail: 'DB connection failed'
-}
+  DBconnectionFail: 'DB connection failed',
+};

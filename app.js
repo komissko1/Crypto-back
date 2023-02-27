@@ -1,29 +1,32 @@
-// Читать про process.env;
-// Add errors
-
 const express = require('express');
 // const mongoose = require('mongoose');
 const { errors } = require('celebrate');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
-
+const helmet = require('helmet');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const { limiter } = require('./middlewares/rateLimiter');
 
 // Use .env for environment keys
 require('dotenv').config();
 
-const { PORT = 3002, NODE_ENV, DB_ADRESS } = process.env;
+const { PORT = 3002, NODE_ENV } = process.env;
 
 const app = express();
 app.use(cookieParser());
+app.use(helmet());
 app.use(requestLogger);
+app.use(limiter);
 
 // CORS setup
 app.use(
   cors({
-    origin: 'https://komissko1.github.io',
+    origin:
+      NODE_ENV === 'production'
+        ? 'https://komissko1.github.io'
+        : 'http://localhost:3000',
     credentials: true,
-  })
+  }),
 );
 
 const allowedCors = [
@@ -51,6 +54,7 @@ app.use((req, res, next) => {
 
 // Mongoose DB connection
 const { mongo } = require('./utils/dbConnection');
+
 mongo();
 
 // parses incoming JSON requests and puts the parsed data in req.body. Not limited bytes
@@ -63,8 +67,7 @@ app.use(errorLogger);
 app.use(errors());
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
-  const message =
-    statusCode === 500 ? 'Error on the servers side' : err.message;
+  const message = statusCode === 500 ? 'Error on the servers side' : err.message;
   res.status(statusCode).send({ message });
   next();
 });

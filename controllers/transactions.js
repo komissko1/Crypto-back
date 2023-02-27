@@ -1,10 +1,10 @@
-const Transaction = require("../models/transaction");
-const NotFoundError = require("../errors/NotFoundError");
-const CreationError = require("../errors/CreationError");
-const { errorMessages } = require("../utils/utils");
-const wallets = require("./wallets");
+const Transaction = require('../models/transaction');
+const NotFoundError = require('../errors/NotFoundError');
+const CreationError = require('../errors/CreationError');
+const { errorMessages } = require('../utils/utils');
+const wallets = require('./wallets');
 
-module.exports.getTransactions = (req, res, next) => {
+module.exports.getTransactions = (req, res) => {
   Transaction.find({ owner: req.user._id })
     .then((data) => {
       res.status(200).send(data);
@@ -36,7 +36,7 @@ module.exports.createTransaction = (req, res, next) => {
       } else {
         wallets
           .updateWallet(data)
-          .then((wallet) => res.status(201).send({wallet, message: 'Transaction created. Wallet updated'}))
+          .then((wallet) => res.status(201).send({ wallet, message: 'Transaction created. Wallet updated' }))
           .catch(next);
       }
     })

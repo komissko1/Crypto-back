@@ -1,7 +1,7 @@
-const User = require("../models/user");
-const NotFoundError = require("../errors/NotFoundError");
-const { errorMessages } = require("../utils/utils");
-const wallets = require("./wallets");
+const User = require('../models/user');
+const NotFoundError = require('../errors/NotFoundError');
+const { errorMessages } = require('../utils/utils');
+const wallets = require('./wallets');
 
 module.exports.getCurrentUser = (req, res, next) => {
   User.findById(req.user._id)
@@ -11,7 +11,7 @@ module.exports.getCurrentUser = (req, res, next) => {
       } else {
         wallets
           .getWallet(user._id)
-          .then((wallet) => res.status(200).send({user, wallet}))
+          .then((wallet) => res.status(200).send({ user, wallet }))
           .catch(next);
       }
     })
@@ -26,7 +26,7 @@ module.exports.updateProfile = (req, res, next) => {
         User.findByIdAndUpdate(
           req.user._id,
           { name, email },
-          { new: true, runValidators: true }
+          { new: true, runValidators: true },
         )
           .orFail()
           .then((updatedUser) => {

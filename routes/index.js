@@ -1,50 +1,50 @@
-const router = require("express").Router();
+const router = require('express').Router();
 
 // Middlewares List
-const { auth } = require("../middlewares/auth");
-const { validateUser } = require("../middlewares/validation");
+const { auth } = require('../middlewares/auth');
+const { validateUser } = require('../middlewares/validation');
 
 // Controllers list
-const { bitStampTicker } = require("../controllers/bitStampTicker");
-const { login } = require("../controllers/login");
-const { createUser } = require("../controllers/createUser");
-const { logout } = require("../controllers/logout");
+const { bitStampTicker } = require('../controllers/bitStampTicker');
+const { login } = require('../controllers/login');
+const { createUser } = require('../controllers/createUser');
+const { logout } = require('../controllers/logout');
 
 // Signup, login routers - no authorization
 router.post(
-  "/login",
+  '/login',
   validateUser({
-    userName: "optional",
-    userEmail: "required",
-    userPassword: "required",
+    userName: 'optional',
+    userEmail: 'required',
+    userPassword: 'required',
   }),
-  login
+  login,
 );
 router.post(
-  "/signup",
+  '/signup',
   validateUser({
-    userName: "required",
-    userEmail: "required",
-    userPassword: "required",
+    userName: 'required',
+    userEmail: 'required',
+    userPassword: 'required',
   }),
-  createUser
+  createUser,
 );
 
 // 3rd party api routers - no authorization
-router.get("/bitstamp/:currency", bitStampTicker);
-router.get("/bitstamp", bitStampTicker);
+router.get('/bitstamp/:currency', bitStampTicker);
+router.get('/bitstamp', bitStampTicker);
 
 // Authorization
 router.use(auth);
 
 // Signout routers - authorization needed
-router.get("/logout", logout);
-router.use("/users", require("./users"));
+router.get('/logout', logout);
+router.use('/users', require('./users'));
 
 // Wallets and Transactions routes
-router.use("/transactions", require("./transactions"));
+router.use('/transactions', require('./transactions'));
 
-router.use("/", (req, res, next) => {
+router.use('/', (req, res, next) => {
   next();
 });
 

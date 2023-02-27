@@ -1,4 +1,4 @@
-const { celebrate, Joi } = require("celebrate");
+const { celebrate, Joi } = require('celebrate');
 
 module.exports.validateUser = ({ userName, userEmail, userPassword }) =>
   celebrate({
@@ -14,11 +14,11 @@ module.exports.validateUser = ({ userName, userEmail, userPassword }) =>
   });
 
 module.exports.validateTransaction = celebrate({
-    body: Joi.object().keys({
-      creditedCurrency: Joi.string().alphanum(),
-      creditedAmount: Joi.number(),
-      debitedCurrency: Joi.string().alphanum(),
-      debitedAmount: Joi.number(),
-      walletId: Joi.string(),
-    }),
-  });
+  body: Joi.object().keys({
+    creditedCurrency: Joi.string().alphanum(),
+    creditedAmount: Joi.number(),
+    debitedCurrency: Joi.string().alphanum(),
+    debitedAmount: Joi.number(),
+    walletId: Joi.string(),
+  }),
+});
