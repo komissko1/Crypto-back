@@ -1,0 +1,3 @@
+NODE_ENV=production
+JWT_SECRET=9bf231a3a5098de737460c5dd6dbdd936be60684dcf264cbe00909f7c718b50c
+DB_ADRESS='mongodb+srv://kkomisarov:ECGPqLVuOfB10Uoj@cluster0.36jo742.mongodb.net/cryptodb'
