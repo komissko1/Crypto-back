@@ -8,7 +8,11 @@ module.exports.logout = (req, res, next) => {
       if (!user) {
         throw new NotFoundError(errorMessages.userNotFound);
       } else {
-        res.clearCookie('jwt');
+        res.clearCookie('jwt', {
+          httpOnly: true,
+          secure: true,
+          sameSite: 'none',
+        });
         res.status(200).send({ message: 'Logged out. See you later' });
       }
     })
