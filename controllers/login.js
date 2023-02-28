@@ -27,7 +27,7 @@ module.exports.login = (req, res, next) => {
             maxAge: 7200000,
             httpOnly: true,
             secure: true,
-            sameSite: none,
+            SameSite: None,
           })
           .status(200)
           .send({
