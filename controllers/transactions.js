@@ -28,7 +28,7 @@ module.exports.createTransaction = (req, res, next) => {
     debitedCurrency,
     debitedAmount,
     owner: req.user._id,
-    wallet: walletId,
+    walletId,
   })
     .then((data) => {
       if (!data) {

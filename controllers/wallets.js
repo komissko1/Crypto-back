@@ -25,7 +25,7 @@ module.exports.updateWallet = (data) => {
     debitedAmount,
     walletId,
   } = data;
-  return Wallet.findOne({ walletId })
+  return Wallet.findById(walletId)
     .then((wallet) => {
       if (!wallet) {
         throw new NotFoundError(errorMessages.walletNotFound);

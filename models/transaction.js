@@ -27,7 +27,7 @@ const transactionSchema = new mongoose.Schema({
     ref: 'user',
     required: true,
   },
-  wallet: {
+  walletId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'wallet',
     required: true,
