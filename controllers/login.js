@@ -4,7 +4,7 @@ const AuthorizationError = require('../errors/AuthorizationError');
 const { errorMessages } = require('../utils/utils');
 const wallets = require('./wallets');
 
-const { JWT_SECRET } = process.env;
+const { NODE_ENV, JWT_SECRET } = process.env;
 
 module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
